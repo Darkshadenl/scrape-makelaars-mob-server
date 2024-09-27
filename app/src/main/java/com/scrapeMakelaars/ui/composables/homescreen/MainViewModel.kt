@@ -4,9 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.scrapeMakelaars.services.parsera.ParseraService
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val parseraService: ParseraService) : ViewModel() {
     private val _logEntries = mutableStateOf<List<String>>(emptyList())
     val logEntries: State<List<String>> = _logEntries
 

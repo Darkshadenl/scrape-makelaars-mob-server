@@ -11,19 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.scrapeMakelaars.ui.composables.homescreen.MainScreen
 import com.scrapeMakelaars.ui.composables.homescreen.MainViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.scrapeMakelaars.services.parsera.IParseraService
-import com.scrapeMakelaars.services.parsera.ParseraService
 import com.scrapeMakelaars.ui.theme.MyApplicationTheme
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-    private val parseraService: IParseraService by inject()
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         setContent {
             MyApplicationTheme {
@@ -31,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainActivityContent()
+                    MainActivityContent(viewModel)
                 }
             }
         }
@@ -40,8 +37,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MainActivityContent() {
-    val viewModel: MainViewModel = viewModel()
+fun MainActivityContent(viewModel: MainViewModel) {
     MainScreen(
         logEntries = viewModel.logEntries.value,
         onRefresh = { viewModel.refreshLog() }
